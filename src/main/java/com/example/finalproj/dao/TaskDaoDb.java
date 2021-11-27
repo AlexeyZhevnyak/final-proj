@@ -1,5 +1,6 @@
 package com.example.finalproj.dao;
 
+import com.example.finalproj.Constants;
 import com.example.finalproj.Role;
 import com.example.finalproj.Status;
 import com.example.finalproj.model.IDao;
@@ -18,12 +19,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class TaskDao implements IDao<Task> {
+public class TaskDaoDb implements IDao<Task> {
 
     private final ProgrammerService programmerService;
     private final Connection connection;
 
-    public TaskDao(Connection connection, ProgrammerService programmerService) {
+    public TaskDaoDb(Connection connection, ProgrammerService programmerService) {
         this.connection = connection;
         this.programmerService = programmerService;
     }
@@ -37,7 +38,7 @@ public class TaskDao implements IDao<Task> {
     public List<Task> getAll() {
         List<Task> list = new ArrayList<>();
         try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("select * from TASK")) {
+             ResultSet resultSet = statement.executeQuery(Constants.SELECT_ALL_TASKS)) {
             while (resultSet.next()) {
                 list.add(new Task(
                     resultSet.getInt("ID"),

@@ -1,5 +1,6 @@
 package com.example.finalproj.dao;
 
+import com.example.finalproj.Constants;
 import com.example.finalproj.Role;
 import com.example.finalproj.model.IDao;
 import com.example.finalproj.model.Programmer;
@@ -15,11 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ProgrammerDao implements IDao<Programmer> {
+public class ProgrammerDaoDb implements IDao<Programmer> {
 
     private final Connection connection;
 
-    public ProgrammerDao(Connection connection) {
+    public ProgrammerDaoDb(Connection connection) {
         this.connection = connection;
     }
 
@@ -28,8 +29,8 @@ public class ProgrammerDao implements IDao<Programmer> {
     public Programmer get(int id) {
         Programmer programmer = null;
         try (PreparedStatement prepareStatement = connection.prepareStatement(
-                "select * from PROGRAMMER where ID = ?")) {
-            prepareStatement.setInt(1, id);
+                Constants.SELECT_PROGRAMMER_BY_ID)) {
+            prepareStatement.setInt(Constants.PROGRAMMER_ID_INDEX, id);
             try (ResultSet resultSet = prepareStatement.executeQuery()) {
                 resultSet.next();
                 programmer = new Programmer(
@@ -52,7 +53,7 @@ public class ProgrammerDao implements IDao<Programmer> {
     public List<Programmer> getAll() {
         List<Programmer> list = new ArrayList<>();
         try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery("select * from PROGRAMMER")) {
+             ResultSet resultSet = statement.executeQuery(Constants.SELECT_ALL_PROGRAMMERS)) {
             while (resultSet.next()) {
                 list.add(new Programmer(
                     resultSet.getInt("ID"),

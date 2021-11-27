@@ -1,5 +1,7 @@
 package com.example.finalproj.configuration;
 
+import com.example.finalproj.Constants;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -11,14 +13,12 @@ import java.sql.SQLException;
 public class DataBaseConfig {
     private Connection connection;
 
-//    public DataBaseConfig() {
-//    }
 
     @Bean
     public Connection getDataSource() {
         if (connection == null){
             try {
-                connection = DriverManager.getConnection("jdbc:h2:C:/Users/admin/test", "sa", "");
+                connection = DriverManager.getConnection(Constants.DB_URL, Constants.DB_USER, Constants.DB_PASSWORD);
             } catch (SQLException e) {
                 e.printStackTrace();
             }

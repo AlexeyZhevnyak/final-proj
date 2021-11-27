@@ -10,13 +10,16 @@ public class Project {
     private List<Programmer> programmers;
     private ProjectStatus status;
     private int creatorId;
+    private String title;
 
-    public Project(int id, List<Task> tasks, List<Programmer> programmers, ProjectStatus status, int creatorId) {
+    public Project(int id, List<Task> tasks, List<Programmer> programmers, ProjectStatus status, int creatorId,
+                   String title) {
         this.id = id;
         this.tasks = tasks;
         this.programmers = programmers;
         this.status = status;
         this.creatorId = creatorId;
+        this.title = title;
     }
 
     public int getId() {
@@ -57,5 +60,13 @@ public class Project {
 
     public void setCreatorId(int creatorId) {
         this.creatorId = creatorId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

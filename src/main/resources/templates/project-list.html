@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Список пректов:</h1>
+    <th:block th:each="project : ${projects}">
+        <h2 th:text="${project.title}"></h2>
+            <ul>
+                <th:block th:each="task : ${project.tasks}">
+                    <li th:text="${task.title}"></li>
+                </th:block>
+            </ul>
+    </th:block>
+</body>
+</html>
