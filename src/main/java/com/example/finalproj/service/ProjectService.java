@@ -18,4 +18,8 @@ public class ProjectService {
     public List<Project> getAll() {
         return dao.getAll();
     }
+
+    public Project get(int parseInt) {
+        return dao.get(parseInt);
+    }
 }

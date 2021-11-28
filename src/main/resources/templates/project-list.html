@@ -7,13 +7,16 @@
 </head>
 <body>
 <h1>Список пректов:</h1>
-    <th:block th:each="project : ${projects}">
-        <h2 th:text="${project.title}"></h2>
-            <ul>
-                <th:block th:each="task : ${project.tasks}">
-                    <li th:text="${task.title}"></li>
-                </th:block>
-            </ul>
-    </th:block>
+<th:block th:each="project : ${projects}">
+    <h2 th:text="${project.title}"></h2>
+    <form method="POST" th:object="${project.title}" th:action="@{/project/{id}(id = ${project.id})}">
+        <input type="submit" value="Открыть">
+    </form>
+    <ul>
+        <th:block th:each="task : ${project.tasks}">
+            <li th:text="${task.title}"></li>
+        </th:block>
+    </ul>
+</th:block>
 </body>
 </html>

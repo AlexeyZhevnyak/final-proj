@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    .wrapper {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .wrapper div {
+        border: black solid 1px;
+    }
+</style>
+<body>
+<div class="wrapper">
+    <div class="todo">
+        <th:block th:each="task : ${toDo}">
+            <p th:text="${task.getTitle()}"></p>
+            <span>Исполнитель: </span><span th:text="${task.getExecutor().getLogin()}"></span>
+        </th:block>
+    </div>
+    <div class="in-progress">
+        <th:block th:each="task : ${inProgress}">
+            <p th:text="${task.getTitle()}"></p>
+            <span>Исполнитель: </span><span th:text="${task.getExecutor().getLogin()}"></span>
+        </th:block>
+    </div>
+    <div class="done">
+        <th:block th:each="task : ${done}">
+            <p th:text="${task.getTitle()}"></p>
+            <span>Исполнитель: </span><span th:text="${task.getExecutor().getLogin()}"></span>
+        </th:block>
+    </div>
+</div>
+</body>
+</html>

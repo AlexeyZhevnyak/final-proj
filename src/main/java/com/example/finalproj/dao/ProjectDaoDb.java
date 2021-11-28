@@ -2,6 +2,7 @@ package com.example.finalproj.dao;
 
 import com.example.finalproj.Constants;
 import com.example.finalproj.ProjectStatus;
+import com.example.finalproj.Role;
 import com.example.finalproj.Status;
 import com.example.finalproj.model.IDao;
 import com.example.finalproj.model.Programmer;
@@ -13,6 +14,7 @@ import com.example.finalproj.service.TaskService;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -36,7 +38,34 @@ public class ProjectDaoDb implements IDao<Project> {
 
     @Override
     public Project get(int id) {
-        return null;
+        Project project = null;
+        try (PreparedStatement prepareStatement = connection.prepareStatement(
+            Constants.SELECT_PROJECT_BY_ID)) {
+            prepareStatement.setInt(Constants.PROJECT_ID_INDEX, id);
+            try (ResultSet resultSet = prepareStatement.executeQuery()) {
+                resultSet.next();
+                int projectID = resultSet.getInt("ID");
+                List<Task> tasks = taskService.getAll()
+                    .stream()
+                    .filter(t -> t.getProjectID() == projectID)
+                    .collect(Collectors.toList());
+                List<Programmer> programmers = tasks.stream()
+                    .map(Task::getExecutor)
+                    .distinct()
+                    .collect(Collectors.toList());
+                project = new Project(
+                    resultSet.getInt("ID"),
+                    tasks,
+                    programmers,
+                    ProjectStatus.valueOf(resultSet.getString("STATUS")),
+                    resultSet.getInt("CREATORID"),
+                    resultSet.getString("TITLE")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return project;
     }
 
     @Override

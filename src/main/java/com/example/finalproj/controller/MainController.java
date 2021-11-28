@@ -20,12 +20,12 @@ import java.util.stream.Collectors;
 import javax.servlet.http.HttpSession;
 
 @Controller(value = "/")
-public class TestController {
+public class MainController {
     private final ProgrammerService programmerService;
     private final TaskService taskService;
     private final ProjectService projectService;
 
-    public TestController(ProgrammerService programmerService, TaskService taskService,
+    public MainController(ProgrammerService programmerService, TaskService taskService,
                           ProjectService projectService) {
         this.programmerService = programmerService;
         this.taskService = taskService;
@@ -34,7 +34,7 @@ public class TestController {
 
     @GetMapping
     public String getProjects(Model model, HttpSession session) {
-        session.setAttribute("currentUserId", 2);
+        session.setAttribute("currentUserId", 5);
         Programmer currentUser = programmerService.get((int) session.getAttribute("currentUserId"));
 
         List<Project> projects = projectService.getAll()
