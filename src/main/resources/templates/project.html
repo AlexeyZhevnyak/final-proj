@@ -11,28 +11,95 @@
         justify-content: space-between;
     }
 
-    .wrapper div {
-        border: black solid 1px;
+    .task {
+        border: black 1px solid;
     }
+
 </style>
+
 <body>
 <div class="wrapper">
     <div class="todo">
         <th:block th:each="task : ${toDo}">
-            <p th:text="${task.getTitle()}"></p>
-            <span>Исполнитель: </span><span th:text="${task.getExecutor().getLogin()}"></span>
+            <div class="task"><p th:text="${task.getTitle()}"></p>
+                <span>Исполнитель: </span><span th:text="${task.getExecutor().getLogin()}"></span>
+                <p>Редактировать</p>
+                <form method="post" th:action="@{/task/{id}(id = ${task.id})}" th:object="${taskForUpdate}">
+
+                    <label>Исполнитель:
+                        <select th:field="*{programmerId}">
+                            <th:block th:each="programmer : ${programmers}">
+                                <option th:value="${programmer.id}" th:text="${programmer.login}"></option>
+                            </th:block>
+                        </select>
+                    </label><br>
+
+                    <select th:field="*{taskStatus}">
+                        <option value="IN_PROGRESS">В процессе</option>
+                        <option value="DONE">Готово</option>
+                        <option value="TO_DO">К выполнению</option>
+                    </select><br>
+                    <input type="hidden" th:field="*{projectId}">
+
+                    <input type="submit" value="Изменить"/>
+                </form>
+            </div>
         </th:block>
     </div>
+
+
     <div class="in-progress">
         <th:block th:each="task : ${inProgress}">
-            <p th:text="${task.getTitle()}"></p>
-            <span>Исполнитель: </span><span th:text="${task.getExecutor().getLogin()}"></span>
+            <div class="task"><p th:text="${task.getTitle()}"></p>
+                <span>Исполнитель: </span><span th:text="${task.getExecutor().getLogin()}"></span>
+                <p>Редактировать</p>
+                <form method="post" th:action="@{/task/{id}(id = ${task.id})}" th:object="${taskForUpdate}">
+
+                    <label>Исполнитель:
+                        <select th:field="*{programmerId}">
+                            <th:block th:each="programmer : ${programmers}">
+                                <option th:value="${programmer.id}" th:text="${programmer.login}"></option>
+                            </th:block>
+                        </select>
+                    </label><br>
+
+                    <select th:field="*{taskStatus}">
+                        <option value="IN_PROGRESS">В процессе</option>
+                        <option value="DONE">Готово</option>
+                        <option value="TO_DO">К выполнению</option>
+                    </select><br>
+                    <input type="hidden" th:field="*{projectId}">
+
+                    <input type="submit" value="Изменить"/>
+                </form>
+            </div>
         </th:block>
     </div>
+
+
     <div class="done">
         <th:block th:each="task : ${done}">
-            <p th:text="${task.getTitle()}"></p>
-            <span>Исполнитель: </span><span th:text="${task.getExecutor().getLogin()}"></span>
+            <div class="task"><p th:text="${task.getTitle()}"></p>
+                <span>Исполнитель: </span><span th:text="${task.getExecutor().getLogin()}"></span>
+                <p>Редактировать</p>
+                <form method="post" th:action="@{/task/{id}(id = ${task.id})}" th:object="${taskForUpdate}">
+
+                    <label>Исполнитель:
+                        <select th:field="*{programmerId}">
+                            <th:block th:each="programmer : ${programmers}">
+                                <option th:value="${programmer.id}" th:text="${programmer.login}"></option>
+                            </th:block>
+                        </select>
+                    </label><br>
+                    <select th:field="*{taskStatus}">
+                        <option value="IN_PROGRESS">В процессе</option>
+                        <option value="DONE">Готово</option>
+                        <option value="TO_DO">К выполнению</option>
+                    </select><br>
+                    <input type="hidden" th:field="*{projectId}">
+                    <input type="submit" value="Изменить"/>
+                </form>
+            </div>
         </th:block>
     </div>
 </div>

@@ -8,6 +8,7 @@ import com.example.finalproj.model.Programmer;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,7 +30,7 @@ public class ProgrammerDaoDb implements IDao<Programmer> {
     public Programmer get(int id) {
         Programmer programmer = null;
         try (PreparedStatement prepareStatement = connection.prepareStatement(
-                Constants.SELECT_PROGRAMMER_BY_ID)) {
+            Constants.SELECT_PROGRAMMER_BY_ID)) {
             prepareStatement.setInt(Constants.PROGRAMMER_ID_INDEX, id);
             try (ResultSet resultSet = prepareStatement.executeQuery()) {
                 resultSet.next();
@@ -78,7 +79,19 @@ public class ProgrammerDaoDb implements IDao<Programmer> {
 
     @Override
     public void update(Programmer programmer) {
-
+        try (PreparedStatement prepareStatement = connection.prepareStatement(
+            "UPDATE PROGRAMMER SET BIRTH = ?, EMAIL = ?, FIO = ?, LOGIN = ?, PASSWORD = ?, ROLE = ? WHERE ID = ?");) {
+            prepareStatement.setDate(1, Date.valueOf(programmer.getBirthDate()));
+            prepareStatement.setString(2, programmer.getEmail());
+            prepareStatement.setString(3, programmer.getFIO());
+            prepareStatement.setString(4, programmer.getLogin());
+            prepareStatement.setString(5, programmer.getPassword());
+            prepareStatement.setString(6, programmer.getRole().name());
+            prepareStatement.setInt(7, programmer.getId());
+            prepareStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

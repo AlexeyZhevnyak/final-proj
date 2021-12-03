@@ -18,4 +18,12 @@ public class TaskService {
     public List<Task> getAll() {
         return dao.getAll();
     }
+
+    public Task get(int id) {
+        return dao.get(id);
+    }
+
+    public void update(Task task) {
+        dao.update(task);
+    }
 }

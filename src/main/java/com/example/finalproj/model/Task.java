@@ -3,6 +3,7 @@ import com.example.finalproj.Status;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 public class Task {
     private int id;
@@ -12,10 +13,10 @@ public class Task {
     private LocalDate begin;
     private LocalDate end;
     private Status status;
-    private List<String> comments;
+    private String comments;
 
     public Task(int id, int projectID, String title, Programmer executor, LocalDate begin, LocalDate end,
-                Status status, List<String> comments) {
+                Status status, String comments) {
         this.id = id;
         this.projectID = projectID;
         this.title = title;
@@ -24,6 +25,9 @@ public class Task {
         this.end = end;
         this.status = status;
         this.comments = comments;
+    }
+
+    public Task() {
     }
 
     public int getId() {
@@ -82,12 +86,32 @@ public class Task {
         this.status = status;
     }
 
-    public List<String> getComments() {
+    public String getComments() {
         return comments;
     }
 
-    public void setComments(List<String> comments) {
+    public void setComments(String comments) {
         this.comments = comments;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Task task = (Task) o;
+        return id == task.id && projectID == task.projectID && Objects.equals(title,
+            task.title) && Objects.equals(executor, task.executor) && Objects.equals(begin,
+            task.begin) && Objects.equals(end, task.end) && status == task.status && Objects.equals(
+            comments, task.comments);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, projectID, title, executor, begin, end, status, comments);
     }
 
     @Override

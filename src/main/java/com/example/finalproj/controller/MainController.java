@@ -47,6 +47,13 @@ public class MainController {
                 return !programmers.isEmpty();
             })
             .collect(Collectors.toList());
+        for (int i = 0; i < projects.size(); i++) {
+            Project project = projects.get(i);
+            List<Task> projectTasksByCurrUser = project.getTasks().stream()
+                .filter(task -> task.getExecutor().getId() == currentUser.getId())
+                .collect(Collectors.toList());
+            project.setTasks(projectTasksByCurrUser);
+        }
         model.addAttribute("projects", projects);
         return "project-list";
     }

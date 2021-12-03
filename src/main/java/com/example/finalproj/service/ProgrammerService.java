@@ -22,4 +22,8 @@ public class ProgrammerService {
     public Programmer get(int id) {
         return dao.get(id);
     }
+
+    public void update(Programmer programmer) {
+        dao.update(programmer);
+    }
 }
