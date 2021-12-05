@@ -22,4 +22,8 @@ public class ProjectService {
     public Project get(int parseInt) {
         return dao.get(parseInt);
     }
+
+    public void update(Project project) {
+        dao.update(project);
+    }
 }

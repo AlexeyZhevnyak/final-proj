@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:th="http://www.thymeleaf.org" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" lang="">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -9,7 +9,7 @@
 <h1>Список пректов:</h1>
 <th:block th:each="project : ${projects}">
     <h2 th:text="${project.title}"></h2>
-    <form method="POST" th:object="${project.title}" th:action="@{/project/{id}(id = ${project.id})}">
+    <form  method="POST" th:object="${project.title}" th:action="@{/project/{id}(id = ${project.id})}">
         <input type="submit" value="Открыть">
     </form>
     <ul>
@@ -18,5 +18,10 @@
         </th:block>
     </ul>
 </th:block>
+<div sec:authorize="hasAuthority('ADMIN')">
+    <form method="get" th:action="@{/admin}">
+        <input type="submit" value="Админка">
+    </form>
+</div>
 </body>
 </html>

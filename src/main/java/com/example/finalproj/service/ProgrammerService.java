@@ -26,4 +26,8 @@ public class ProgrammerService {
     public void update(Programmer programmer) {
         dao.update(programmer);
     }
+
+    public void save(Programmer programmer) {
+        dao.save(programmer);
+    }
 }

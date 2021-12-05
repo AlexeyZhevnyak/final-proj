@@ -14,6 +14,7 @@ import com.example.finalproj.service.TaskService;
 import org.springframework.stereotype.Component;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -105,7 +106,17 @@ public class ProjectDaoDb implements IDao<Project> {
 
     @Override
     public void update(Project project) {
+        try (PreparedStatement prepareStatement = connection.prepareStatement(
+            "UPDATE PROJECT set STATUS = ?, TITLE = ?, CREATORID = ? where ID = ?");) {
+            prepareStatement.setString(1, project.getStatus().name());
+            prepareStatement.setString(2, project.getTitle());
+            prepareStatement.setInt(3, project.getCreatorId());
+            prepareStatement.setInt(4, project.getId());
 
+            prepareStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

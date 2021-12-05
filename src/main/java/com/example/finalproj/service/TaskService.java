@@ -26,4 +26,8 @@ public class TaskService {
     public void update(Task task) {
         dao.update(task);
     }
+
+    public void save(Task task) {
+        dao.save(task);
+    }
 }

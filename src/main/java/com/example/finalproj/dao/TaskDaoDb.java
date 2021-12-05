@@ -82,7 +82,19 @@ public class TaskDaoDb implements IDao<Task> {
 
     @Override
     public void save(Task task) {
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement(
+            "insert into TASK (ID_PROG, ID_PROJECT, TITLE, START_DATE, END_DATE, STATUS, COMMENTS) values ( ?,?,?,?,?,?,? )")) {
+                    preparedStatement.setInt(1, task.getExecutor().getId());
+                    preparedStatement.setInt(2, task.getProjectID());
+                    preparedStatement.setString(3, task.getTitle());
+                    preparedStatement.setDate(4, Date.valueOf(task.getBegin()));
+                    preparedStatement.setDate(5, Date.valueOf(task.getEnd()));
+                    preparedStatement.setString(6, task.getStatus().name());
+                    preparedStatement.setString(7, task.getComments());
+                    preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     @Override

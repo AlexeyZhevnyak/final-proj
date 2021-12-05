@@ -74,7 +74,17 @@ public class ProgrammerDaoDb implements IDao<Programmer> {
 
     @Override
     public void save(Programmer programmer) {
-
+        try (PreparedStatement preparedStatement = connection.prepareStatement("insert into PROGRAMMER (FIO, BIRTH, LOGIN, PASSWORD, EMAIL, ROLE) values ( ?,?,?,?,?,? )")){
+            preparedStatement.setString(1,programmer.getFIO());
+            preparedStatement.setDate(2,Date.valueOf(programmer.getBirthDate()));
+            preparedStatement.setString(3,programmer.getLogin());
+            preparedStatement.setString(4,programmer.getPassword());
+            preparedStatement.setString(5,programmer.getEmail());
+            preparedStatement.setString(6,programmer.getRole().name());
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
     }
 
     @Override

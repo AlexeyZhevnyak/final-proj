@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method="post" th:action="@{/task/add}" th:object="${taskDTO}">
+    <input type="hidden" th:field="*{projectID}">
+    <label>
+        Название
+        <input type="text" th:field="*{title}">
+    </label><br>
+    <label>
+        Исполнитель
+        <select th:field="*{executorId}">
+            <th:block th:each="programmer : ${programmers}">
+                <option th:value="${programmer.id}" th:text="${programmer.login}"></option>
+            </th:block>
+        </select>
+    </label><br>
+    <label>
+        Дата начала
+        <input type="date" th:field="*{{begin}}">
+    </label><br>
+    <label>
+        Дата конца
+        <input type="date" th:field="*{{end}}">
+    </label><br>
+    <label>
+        Статус
+        <select th:field="*{status}">
+            <option value="IN_PROGRESS">В процессе</option>
+            <option value="DONE">Готово</option>
+            <option value="TO_DO">К выполнению</option>
+        </select>
+    </label><br>
+    <label>
+        Комментарии
+        <textarea th:field = "*{comments}">
+
+        </textarea>
+    </label>
+    <input type="submit">
+</form>
+</body>
+</html>

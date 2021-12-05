@@ -1,5 +1,6 @@
 package com.example.finalproj.controller;
 
+import com.example.finalproj.ProjectStatus;
 import com.example.finalproj.model.Programmer;
 import com.example.finalproj.model.Project;
 import com.example.finalproj.model.Task;
@@ -10,11 +11,8 @@ import com.example.finalproj.service.TaskService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
@@ -34,7 +32,7 @@ public class MainController {
 
     @GetMapping
     public String getProjects(Model model, HttpSession session) {
-        session.setAttribute("currentUserId", 5);
+//        session.setAttribute("currentUserId", 38);
         Programmer currentUser = programmerService.get((int) session.getAttribute("currentUserId"));
 
         List<Project> projects = projectService.getAll()
@@ -46,6 +44,7 @@ public class MainController {
                     .collect(Collectors.toList());
                 return !programmers.isEmpty();
             })
+            .filter(project -> project.getStatus().equals(ProjectStatus.IN_PROGRESS))
             .collect(Collectors.toList());
         for (int i = 0; i < projects.size(); i++) {
             Project project = projects.get(i);
@@ -55,6 +54,6 @@ public class MainController {
             project.setTasks(projectTasksByCurrUser);
         }
         model.addAttribute("projects", projects);
-        return "project-list";
+        return "main";
     }
 }

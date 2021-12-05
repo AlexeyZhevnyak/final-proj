@@ -1,17 +1,26 @@
 package com.example.finalproj.model;
 import com.example.finalproj.Status;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
-public class Task {
+
+public class Task implements Serializable {
     private int id;
     private int projectID;
     private String title;
     private Programmer executor;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate begin;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate end;
+
     private Status status;
     private String comments;
 

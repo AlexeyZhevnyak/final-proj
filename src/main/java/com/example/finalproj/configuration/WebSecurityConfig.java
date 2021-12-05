@@ -24,18 +24,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-
-        // Setting Service to find User in the database.
-        // And Setting PassswordEncoder
         auth.userDetailsService(userDetailsService);
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
+        http.csrf().disable()
             .authorizeRequests()
-            .antMatchers("/**")
-            .permitAll();
+            .antMatchers("/admin/**").hasAuthority("ADMIN")
+            .anyRequest()
+            .authenticated()
+            .and()
+            .formLogin()
+            .loginPage("/login").permitAll()
+            .failureUrl("/login-error.html")
+            .and()
+            .logout()
+            .logoutSuccessUrl("/");
 
     }
 

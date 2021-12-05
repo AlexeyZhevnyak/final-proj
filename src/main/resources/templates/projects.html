@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<th:block th:each="project : ${projects}">
+    <div class="project">
+        <h1 th:text="${project.title}"></h1>
+        <p>Статус <span th:text="${project.status}"> </span></p>
+        <p>Участники</p>
+        <ul>
+            <th:block th:each="programmer : ${project.programmers}">
+                <li th:text="${programmer.login}"></li>
+            </th:block>
+        </ul>
+        <p>Изменить статус</p>
+        <form method="POST" th:object="${updateProjectDto}"
+              th:action="@{/admin/project/{id}/update(id = ${project.id})}">
+            <select th:field="*{projectStatus}">
+                <option value="IN_PROGRESS">В процессе</option>
+                <option value="IN_ORDER">В очереди</option>
+                <option value="DONE">Закончен</option>
+            </select>
+
+            <input type="submit">
+        </form>
+    </div>
+</th:block>
+</body>
+</html>

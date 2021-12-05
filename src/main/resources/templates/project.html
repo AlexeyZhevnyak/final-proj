@@ -20,9 +20,12 @@
 <body>
 <div class="wrapper">
     <div class="todo">
+        <h2>К исполнению</h2>
         <th:block th:each="task : ${toDo}">
-            <div class="task"><p th:text="${task.getTitle()}"></p>
+            <div class="task">
+                <p th:text="${task.getTitle()}"></p>
                 <span>Исполнитель: </span><span th:text="${task.getExecutor().getLogin()}"></span>
+                <p th:text="${task.comments}"></p>
                 <p>Редактировать</p>
                 <form method="post" th:action="@{/task/{id}(id = ${task.id})}" th:object="${taskForUpdate}">
 
@@ -39,6 +42,7 @@
                         <option value="DONE">Готово</option>
                         <option value="TO_DO">К выполнению</option>
                     </select><br>
+                    <textarea th:field="*{comments}"></textarea>
                     <input type="hidden" th:field="*{projectId}">
 
                     <input type="submit" value="Изменить"/>
@@ -49,9 +53,12 @@
 
 
     <div class="in-progress">
+        <h2>В процессе</h2>
         <th:block th:each="task : ${inProgress}">
-            <div class="task"><p th:text="${task.getTitle()}"></p>
+            <div class="task">
+                <p th:text="${task.getTitle()}"></p>
                 <span>Исполнитель: </span><span th:text="${task.getExecutor().getLogin()}"></span>
+                <p th:text="${task.comments}"></p>
                 <p>Редактировать</p>
                 <form method="post" th:action="@{/task/{id}(id = ${task.id})}" th:object="${taskForUpdate}">
 
@@ -68,6 +75,7 @@
                         <option value="DONE">Готово</option>
                         <option value="TO_DO">К выполнению</option>
                     </select><br>
+                    <textarea th:field="*{comments}"></textarea>
                     <input type="hidden" th:field="*{projectId}">
 
                     <input type="submit" value="Изменить"/>
@@ -78,9 +86,11 @@
 
 
     <div class="done">
+        <h2>Готово</h2>
         <th:block th:each="task : ${done}">
             <div class="task"><p th:text="${task.getTitle()}"></p>
                 <span>Исполнитель: </span><span th:text="${task.getExecutor().getLogin()}"></span>
+                <p th:text="${task.comments}"></p>
                 <p>Редактировать</p>
                 <form method="post" th:action="@{/task/{id}(id = ${task.id})}" th:object="${taskForUpdate}">
 
@@ -96,6 +106,7 @@
                         <option value="DONE">Готово</option>
                         <option value="TO_DO">К выполнению</option>
                     </select><br>
+                    <textarea th:field="*{comments}"></textarea>
                     <input type="hidden" th:field="*{projectId}">
                     <input type="submit" value="Изменить"/>
                 </form>
@@ -103,5 +114,9 @@
         </th:block>
     </div>
 </div>
+<form method="post" th:action="@{/task}" th:object="${taskForUpdate}">
+    <input type="hidden" th:field="*{projectId}">
+    <input type="submit" value="Добавить задачу">
+</form>
 </body>
 </html>

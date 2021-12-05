@@ -2,12 +2,19 @@ package com.example.finalproj.model;
 
 import com.example.finalproj.Role;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Programmer {
     private int id;
     private String FIO;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthDate;
+
     private String password;
     private String email;
     private Role role;
@@ -80,6 +87,25 @@ public class Programmer {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Programmer that = (Programmer) o;
+        return id == that.id && Objects.equals(FIO, that.FIO) && Objects.equals(birthDate,
+            that.birthDate) && Objects.equals(password, that.password) && Objects.equals(email,
+            that.email) && role == that.role && Objects.equals(login, that.login);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, FIO, birthDate, password, email, role, login);
     }
 
     @Override

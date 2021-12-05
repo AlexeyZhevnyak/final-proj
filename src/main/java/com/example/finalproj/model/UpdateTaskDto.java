@@ -3,6 +3,7 @@ package com.example.finalproj.model;
 public class UpdateTaskDto {
     private int programmerId;
     private String taskStatus;
+    private String comments;
     private int projectId;
 
     public UpdateTaskDto(int programmerId, String taskStatus, int projectId) {
@@ -36,5 +37,13 @@ public class UpdateTaskDto {
 
     public void setTaskStatus(String taskStatus) {
         this.taskStatus = taskStatus;
+    }
+
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
     }
 }

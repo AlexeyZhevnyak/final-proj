@@ -37,7 +37,7 @@ public class ProjectController {
         model.addAttribute("toDo", tasksByStatus.get(Status.TO_DO));
         model.addAttribute("inProgress", tasksByStatus.get(Status.IN_PROGRESS));
         model.addAttribute("done", tasksByStatus.get(Status.DONE));
-        model.addAttribute("programmers", programmerService.getAll());
+        model.addAttribute("programmers", projectService.get(id).getProgrammers());
 
         UpdateTaskDto updateTaskDto = new UpdateTaskDto();
         updateTaskDto.setProjectId(id);
